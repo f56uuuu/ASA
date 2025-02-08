@@ -1,0 +1,32 @@
+Public Class Form1
+    Dim randomNumber As Integer
+    Dim attempts As Integer = 0
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' توليد رقم عشوائي بين 1 و 100
+        Dim rand As New Random()
+        randomNumber = rand.Next(1, 101)
+    End Sub
+
+    Private Sub btnGuess_Click(sender As Object, e As EventArgs) Handles btnGuess.Click
+        ' الحصول على تخمين اللاعب
+        Dim playerGuess As Integer
+        If Integer.TryParse(txtGuess.Text, playerGuess) Then
+            attempts += 1
+            ' تحقق من التخمين
+            If playerGuess > randomNumber Then
+                lblResult.Text = "رقمك أعلى من المطلوب!"
+            ElseIf playerGuess < randomNumber Then
+                lblResult.Text = "رقمك أقل من المطلوب!"
+            Else
+                lblResult.Text = "مبروك! لقد خمنت الرقم الصحيح في " & attempts & " محاولة."
+                ' إعادة توليد رقم عشوائي جديد
+                randomNumber = (New Random()).Next(1, 101)
+                attempts = 0
+            End If
+        Else
+            lblResult.Text = "الرجاء إدخال رقم صحيح."
+        End If
+    End Sub
+End Class
+
